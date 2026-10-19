@@ -1,0 +1,21 @@
+{
+  "extends": "@react-native/typescript-config",
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "strict": true,
+    "resolveJsonModule": true,
+    "noEmit": true
+  },
+  "include": [
+    "App.tsx",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "test/**/*.tsx",
+    "config/runtime.generated.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "ios",
+    "android"
+  ]
+}

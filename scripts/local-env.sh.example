@@ -1,0 +1,5 @@
+# Copy to ignored scripts/local-env.sh. Do not add secrets to this template.
+# Export non-secret machine defaults here; keep keys in ignored config files.
+# export PIKD_DEVICE_ID="your-device-id"
+# export PIKD_DEMO_COLLECT_RADIUS_M=1000 # Local QA only; backend eligibility is unchanged.
+# export PIKD_LOG_DIR="/path/to/private/logs"

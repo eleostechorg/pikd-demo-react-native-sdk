@@ -1,0 +1,67 @@
+# Resolve react_native_pods.rb with node to allow for hoisting
+require Pod::Executable.execute_command('node', ['-p',
+  'require.resolve(
+    "react-native/scripts/react_native_pods.rb",
+    {paths: [process.argv[1]]},
+  )', __dir__]).strip
+
+require_relative '../node_modules/react-native-permissions/scripts/setup'
+setup_permissions(['Camera', 'LocationWhenInUse'])
+
+platform :ios, min_ios_version_supported
+prepare_react_native_project!
+
+linkage = ENV['USE_FRAMEWORKS']
+if linkage != nil
+  Pod::UI.puts "Configuring Pod with #{linkage}ally linked Frameworks".green
+  use_frameworks! :linkage => linkage.to_sym
+end
+
+target 'PikdExperienceDemo' do
+  pod 'react-native-maps/Google', :path => '../node_modules/react-native-maps'
+  config = use_native_modules!
+
+  use_react_native!(
+    :path => config[:reactNativePath],
+    # An absolute path to your application root.
+    :app_path => "#{Pod::Config.instance.installation_root}/.."
+  )
+
+  post_install do |installer|
+    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
+    react_native_post_install(
+      installer,
+      config[:reactNativePath],
+      :mac_catalyst_enabled => false,
+      # :ccache_enabled => true
+    )
+    # fmt 11.0.2 bundled by RN 0.80 fails consteval checks on newer Apple Clang.
+    # https://github.com/fmtlib/fmt/issues/4740
+    # Patch the generated header (compiler flags are overwritten by this fmt).
+    # Remove after upgrading RN to a release with a compatible fmt version.
+    fmt_header = File.join(installer.sandbox.root, 'fmt/include/fmt/base.h')
+    if File.exist?(fmt_header)
+      source = File.read(fmt_header)
+      fixed = source.sub(
+        '#elif defined(__apple_build_version__) && __apple_build_version__ < 14000029L',
+        '#elif defined(__apple_build_version__)'
+      )
+      if fixed != source
+        File.chmod(0644, fmt_header)
+        File.write(fmt_header, fixed)
+      end
+    end
+
+    # Resource bundles in third-party pods can retain iOS 12/13 targets.
+    # Keep every pod at the app's RN minimum; preserve any higher requirement.
+    minimum = Gem::Version.new(min_ios_version_supported)
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |configuration|
+        current = configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET']
+        if current && Gem::Version.new(current) < minimum
+          configuration.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = minimum.to_s
+        end
+      end
+    end
+  end
+end
