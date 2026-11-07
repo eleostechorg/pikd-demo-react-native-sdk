@@ -136,3 +136,7 @@ For troubleshooting the example, use the [platform runners and logs](LOCAL_SETUP
 ## License
 
 PIKD SDK use requires a written agreement with ELEOS WORLD LTD. See [LICENSE](../LICENSE) and retain the [third-party notices](../ASSETS.md) when reusing bundled assets.
+
+### Host-owned map header
+
+When your host page already supplies its own header and SDK dismissal control, pass `showMapHeader: false` in the experience configuration. It defaults to `true` and applies only to the root map. Other tabs and nested screens retain SDK headers and back navigation. In the standalone demo, the equivalent local config key is `PIKD_SHOW_MAP_HEADER`.

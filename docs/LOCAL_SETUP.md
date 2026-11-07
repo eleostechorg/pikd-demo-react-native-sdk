@@ -202,3 +202,7 @@ Use the platform runners for combined setup, build and device logs.
 | iPhone logs missing | Check libimobiledevice installation, pairing and that the phone is unlocked. |
 
 For further help, contact your PIKD representative or open a demo issue with the platform, tool versions, reproduction steps and a redacted log excerpt.
+
+### Map header
+
+Set `"PIKD_SHOW_MAP_HEADER": false` in the local JSON configuration to hide the SDK header on the root map. Run `npm run prepare:config` and reload/rebuild after changing it. The default is `true`. Existing-app integrations use `showMapHeader: false` in their SDK launch configuration when the host provides its own header and dismissal control; nested SDK screens retain back navigation.

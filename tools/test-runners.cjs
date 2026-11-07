@@ -223,7 +223,10 @@ test('malformed tenant input fails before native tools without printing values',
 test('external config/native Maps/environment/QA overrides retain original input', t => {
   const { root, env } = fixture(t);
   const config = path.join(root, 'external.json');
-  const original = JSON.stringify({ PIKD_USER: 'fixture-member-ref' });
+  const original = JSON.stringify({
+    PIKD_USER: 'fixture-member-ref',
+    PIKD_SHOW_MAP_HEADER: false,
+  });
   fs.writeFileSync(config, original);
   fs.writeFileSync(
     path.join(root, 'android/keys.properties'),
@@ -241,6 +244,12 @@ test('external config/native Maps/environment/QA overrides retain original input
   });
   assert.equal(result.status, 0, result.stderr);
   assert.equal(fs.readFileSync(config, 'utf8'), original);
+  assert.equal(
+    JSON.parse(
+      fs.readFileSync(path.join(root, 'config/runtime.generated.json')),
+    ).PIKD_SHOW_MAP_HEADER,
+    false,
+  );
   assert.equal(
     JSON.parse(
       fs.readFileSync(path.join(root, 'config/runtime.generated.json')),
