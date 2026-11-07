@@ -117,6 +117,7 @@ function DemoHome({ values }: { values: DemoValues }) {
         locale,
         contentLanguageRef: values.PIKD_LANGUAGE_REF,
         collectRadiusMeters: radiusMeters(values),
+        showMapHeader: values.PIKD_SHOW_MAP_HEADER ?? true,
         onArDiagnostic: event =>
           console.info('[PIKD demo] AR transition', event),
         theme,

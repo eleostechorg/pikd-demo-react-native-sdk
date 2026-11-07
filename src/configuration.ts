@@ -13,6 +13,7 @@ export interface DemoValues {
   PIKD_UI_LOCALE?: string;
   PIKD_LANGUAGE_REF?: string;
   PIKD_DEMO_COLLECT_RADIUS_M?: number | string;
+  PIKD_SHOW_MAP_HEADER?: boolean;
   PIKD_PARTNER_LABEL?: string;
   PIKD_PARTNER_ITEM_BRAND?: string;
   PIKD_PARTNER_APP_NAME?: string;
