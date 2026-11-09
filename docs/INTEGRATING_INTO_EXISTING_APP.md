@@ -24,6 +24,8 @@ Install the packages for your integration and complete their native setup. Use t
 - **URL support:** import `react-native-url-polyfill/auto` before SDK imports, as shown in [index.js](../index.js).
 - **Session IDs:** install `react-native-get-random-values@1.11.0` for the full experience.
 
+The iOS demo uses the UIScene lifecycle. `AppDelegate` initializes Google Maps and the React Native factory, and `SceneDelegate` creates the scene's window and starts the React Native view. Its `Info.plist` registers a single application scene. When embedding PIKD, keep your host application's lifecycle and initialize Google Maps before presenting the SDK. The demo's [SceneDelegate](../ios/PikdExperienceDemo/SceneDelegate.swift) provides the window setup reference.
+
 Run CocoaPods after installing native dependencies:
 
 ```sh
@@ -73,6 +75,8 @@ Replace the named values with your app's configuration and adapters. Keep the co
 For adapter implementations, see [src/device-adapters.ts](../src/device-adapters.ts). Connect these interfaces to your app's location and permission providers.
 
 The CDA entry exchanges identity for a PIKD session before opening the campaign. Session credentials stay scoped to that launch. Keep your host user identity current when users sign in, sign out or switch accounts.
+
+PIKD manages the production collection radius through backend configuration. The standalone demo's `PIKD_DEMO_COLLECT_RADIUS_M` override is intended for local device testing from a distance. Production trail configuration is agreed with PIKD. See [Testing collection radius](LOCAL_SETUP.md#testing-collection-radius) for the demo-only setting.
 
 ## Open and close the experience
 

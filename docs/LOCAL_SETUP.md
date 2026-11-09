@@ -69,6 +69,8 @@ If you prefer a native Maps key file, copy `android/keys.properties.example` to 
 
 ## iOS
 
+The demo uses the UIScene lifecycle with one application window. `AppDelegate` initializes Google Maps and the React Native factory. `SceneDelegate` creates the window and starts the app, using the scene configuration registered in `Info.plist`.
+
 1. Create your local signing file:
 
    ```sh
@@ -94,6 +96,14 @@ The runner installs Ruby gems and CocoaPods, builds the app, installs it and sta
 The signing file, device-specific environment and generated settings remain local.
 
 ## Configuration and branding
+
+### Testing collection radius
+
+PIKD configures the production collection radius through the backend. The standalone demo's `PIKD_DEMO_COLLECT_RADIUS_M` setting is an optional testing-only override, measured in metres. It widens the demo's local distance gate so you can test the collection UI while physically far from an asset. Backend collection eligibility still applies to the device location sent with the request.
+
+For a remote device test, add `"PIKD_DEMO_COLLECT_RADIUS_M": 10000` to your ignored `config/pikd.local.json`, then run `npm run prepare:config` and reload or rebuild the demo. Use the agreed PIKD production configuration when validating the real-world trail.
+
+### Branding
 
 Add optional settings to `config/pikd.local.json`:
 
@@ -192,7 +202,7 @@ Use the platform runners for combined setup, build and device logs.
 | Blank map | Check the platform Maps SDK, key restrictions, application/bundle ID and Android signing certificate. |
 | Map has no objects | Search around your tenant's campaign locations. The map search covers up to 5 km. |
 | Location unavailable | Enable device location services and grant the app location permission. |
-| Collect button unavailable | Move within collection range and select the object. The default UI radius is 5 m. |
+| Collect button unavailable | Check device location and campaign eligibility. For remote device tests, see [Testing collection radius](#testing-collection-radius). |
 | Android build or device error | Check JDK/SDK/NDK versions, SDK path, USB authorization and `adb devices -l`. |
 | iPhone not found | Confirm UDID, trust, pairing, Developer Mode and Xcode device visibility. |
 | iOS signing error | Check `DEVELOPMENT_TEAM`, Apple account and provisioning for the bundle ID. |
