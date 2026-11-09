@@ -76,6 +76,8 @@ For adapter implementations, see [src/device-adapters.ts](../src/device-adapters
 
 The CDA entry exchanges identity for a PIKD session before opening the campaign. Session credentials stay scoped to that launch. Keep your host user identity current when users sign in, sign out or switch accounts.
 
+PIKD manages the production collection radius through backend configuration. The standalone demo's `PIKD_DEMO_COLLECT_RADIUS_M` override is intended for local device testing from a distance. Production trail configuration is agreed with PIKD. See [Testing collection radius](LOCAL_SETUP.md#testing-collection-radius) for the demo-only setting.
+
 ## Open and close the experience
 
 Present the component in a full-screen route or modal. The following example assumes your app already has a `SafeAreaProvider`:
