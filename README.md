@@ -52,6 +52,10 @@ Choose a language and tap **Open PIKD**. The app opens your tenant's active camp
 
 Collection uses your device location and the campaign's collection rules. Search around locations configured for your tenant. Collection results display messages returned by PIKD.
 
+### Testing collection from a distance
+
+PIKD manages the production collection radius through backend configuration. For local device testing, `PIKD_DEMO_COLLECT_RADIUS_M` in `config/pikd.local.json` provides a testing-only override of the demo's local distance gate. For example, `10000` lets you exercise the collection UI from up to 10 km away. The backend still validates collection eligibility using the device location. Run `npm run prepare:config` and reload or rebuild the demo after changing this value. Use the agreed PIKD production configuration when validating the real-world trail.
+
 ## Customize the example
 
 Set partner names, colors, fonts and language in your local configuration. See [configuration and branding](docs/LOCAL_SETUP.md#configuration-and-branding).
