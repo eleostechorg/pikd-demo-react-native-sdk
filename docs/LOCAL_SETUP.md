@@ -69,6 +69,8 @@ If you prefer a native Maps key file, copy `android/keys.properties.example` to 
 
 ## iOS
 
+The demo uses the UIScene lifecycle with one application window. `AppDelegate` initializes Google Maps and the React Native factory. `SceneDelegate` creates the window and starts the app, using the scene configuration registered in `Info.plist`.
+
 1. Create your local signing file:
 
    ```sh
