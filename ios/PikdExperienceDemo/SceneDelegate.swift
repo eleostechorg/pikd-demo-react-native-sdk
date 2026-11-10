@@ -17,6 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let window = UIWindow(windowScene: windowScene)
     self.window = window
+    appDelegate.window = window
     factory.startReactNative(
       withModuleName: "PikdExperienceDemo",
       in: window,

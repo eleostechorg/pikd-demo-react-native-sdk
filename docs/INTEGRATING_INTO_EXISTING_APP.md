@@ -24,7 +24,7 @@ Install the packages for your integration and complete their native setup. Use t
 - **URL support:** import `react-native-url-polyfill/auto` before SDK imports, as shown in [index.js](../index.js).
 - **Session IDs:** install `react-native-get-random-values@1.11.0` for the full experience.
 
-The iOS demo uses the UIScene lifecycle. `AppDelegate` initializes Google Maps and the React Native factory, and `SceneDelegate` creates the scene's window and starts the React Native view. Its `Info.plist` registers a single application scene. When embedding PIKD, keep your host application's lifecycle and initialize Google Maps before presenting the SDK. The demo's [SceneDelegate](../ios/PikdExperienceDemo/SceneDelegate.swift) provides the window setup reference.
+The iOS demo uses the UIScene lifecycle. `AppDelegate` initializes Google Maps and the React Native factory, and `SceneDelegate` creates the scene's window and starts the React Native view. `AppDelegate.window` exposes a weak reference to the scene-owned window for React Native 0.80's orientation handling. Its `Info.plist` registers a single application scene. When embedding PIKD, keep your host application's lifecycle and initialize Google Maps before presenting the SDK. The demo's [SceneDelegate](../ios/PikdExperienceDemo/SceneDelegate.swift) provides the window setup reference.
 
 Run CocoaPods after installing native dependencies:
 
