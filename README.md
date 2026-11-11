@@ -54,7 +54,7 @@ Collection uses your device location and the campaign's collection rules. Search
 
 ### Testing collection from a distance
 
-PIKD manages the production collection radius through backend configuration. For local device testing, `PIKD_DEMO_COLLECT_RADIUS_M` in `config/pikd.local.json` provides a testing-only override of the demo's local distance gate. For example, `10000` lets you exercise the collection UI from up to 10 km away. The backend still validates collection eligibility using the device location. Run `npm run prepare:config` and reload or rebuild the demo after changing this value. Use the agreed PIKD production configuration when validating the real-world trail.
+The collection radius is set by the host app with `collectRadiusMeters` (metres) in the launch configuration. It controls both how far away drops load in the AR view and how close a member must be to collect. The generic default is 5 m; `PikdCdaExperience` defaults to 50 m when the field is omitted. The backend also checks the device location sent with each collect. For local device testing, `PIKD_DEMO_COLLECT_RADIUS_M` in `config/pikd.local.json` provides a testing-only override of the demo's local distance gate. For example, `10000` lets you exercise the collection UI from up to 10 km away. The backend still validates collection eligibility using the device location. Run `npm run prepare:config` and reload or rebuild the demo after changing this value. Use the agreed PIKD production configuration when validating the real-world trail.
 
 ## Customize the example
 

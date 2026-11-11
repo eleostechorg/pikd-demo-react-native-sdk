@@ -99,7 +99,7 @@ The signing file, device-specific environment and generated settings remain loca
 
 ### Testing collection radius
 
-PIKD configures the production collection radius through the backend. The standalone demo's `PIKD_DEMO_COLLECT_RADIUS_M` setting is an optional testing-only override, measured in metres. It widens the demo's local distance gate so you can test the collection UI while physically far from an asset. Backend collection eligibility still applies to the device location sent with the request.
+The collection radius is set by the host app with `collectRadiusMeters` (metres) in the launch configuration. It controls both how far away drops load in the AR view and how close a member must be to collect. The generic default is 5 m; `PikdCdaExperience` defaults to 50 m when the field is omitted. The backend also checks the device location sent with each collect. In the standalone demo the same value is set with `PIKD_DEMO_COLLECT_RADIUS_M` (metres). It widens the demo's local distance gate so you can test the collection UI while physically far from an asset. Backend collection eligibility still applies to the device location sent with the request.
 
 For a remote device test, add `"PIKD_DEMO_COLLECT_RADIUS_M": 10000` to your ignored `config/pikd.local.json`, then run `npm run prepare:config` and reload or rebuild the demo. Use the agreed PIKD production configuration when validating the real-world trail.
 
@@ -215,4 +215,4 @@ For further help, contact your PIKD representative or open a demo issue with the
 
 ### Map header
 
-Set `"PIKD_SHOW_MAP_HEADER": false` in the local JSON configuration to hide the SDK header on the root map. Run `npm run prepare:config` and reload/rebuild after changing it. The default is `true`. Existing-app integrations use `showMapHeader: false` in their SDK launch configuration when the host provides its own header and dismissal control; nested SDK screens retain back navigation.
+Set `"PIKD_SHOW_TAB_HEADERS": false` in the local JSON configuration to hide SDK headers on all root tabs when the host provides its own header and dismissal control. Run `npm run prepare:config` and reload/rebuild after changing it. The default is `true`. Existing-app integrations pass `showTabHeaders: false` in their SDK launch configuration. Nested screens retain back and close controls. `PIKD_SHOW_MAP_HEADER` / `showMapHeader` still control the root map independently when all-tab headers are enabled.

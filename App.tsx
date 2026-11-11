@@ -118,6 +118,8 @@ function DemoHome({ values }: { values: DemoValues }) {
         contentLanguageRef: values.PIKD_LANGUAGE_REF,
         collectRadiusMeters: radiusMeters(values),
         showMapHeader: values.PIKD_SHOW_MAP_HEADER ?? true,
+        // Omitted unless configured, so the SDK default applies (CDA: follows showMapHeader).
+        showTabHeaders: values.PIKD_SHOW_TAB_HEADERS,
         onArDiagnostic: event =>
           console.info('[PIKD demo] AR transition', event),
         theme,

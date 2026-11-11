@@ -76,7 +76,7 @@ For adapter implementations, see [src/device-adapters.ts](../src/device-adapters
 
 The CDA entry exchanges identity for a PIKD session before opening the campaign. Session credentials stay scoped to that launch. Keep your host user identity current when users sign in, sign out or switch accounts.
 
-PIKD manages the production collection radius through backend configuration. The standalone demo's `PIKD_DEMO_COLLECT_RADIUS_M` override is intended for local device testing from a distance. Production trail configuration is agreed with PIKD. See [Testing collection radius](LOCAL_SETUP.md#testing-collection-radius) for the demo-only setting.
+The collection radius is set by the host app with `collectRadiusMeters` (metres) in the launch configuration. It controls both how far away drops load in the AR view and how close a member must be to collect. The generic default is 5 m; `PikdCdaExperience` defaults to 50 m when the field is omitted. The backend also checks the device location sent with each collect. The standalone demo's `PIKD_DEMO_COLLECT_RADIUS_M` setting is only the demo's name for this value; in your app set `collectRadiusMeters` directly. See [Testing collection radius](LOCAL_SETUP.md#testing-collection-radius) for the demo-only setting.
 
 ## Open and close the experience
 
@@ -141,6 +141,6 @@ For troubleshooting the example, use the [platform runners and logs](LOCAL_SETUP
 
 PIKD SDK use requires a written agreement with ELEOS WORLD LTD. See [LICENSE](../LICENSE) and retain the [third-party notices](../ASSETS.md) when reusing bundled assets.
 
-### Host-owned map header
+### Host-owned headers
 
-When your host page already supplies its own header and SDK dismissal control, pass `showMapHeader: false` in the experience configuration. It defaults to `true` and applies only to the root map. Other tabs and nested screens retain SDK headers and back navigation. In the standalone demo, the equivalent local config key is `PIKD_SHOW_MAP_HEADER`.
+When your host supplies its own header and dismissal control, pass `showTabHeaders: false` in the launch configuration to hide SDK headers on Map, Info, Leaderboard and Profile. It defaults to `true`. Nested screens retain their SDK back and close controls. `showMapHeader: false` remains available for hiding only the root map header. If both options are supplied, `showTabHeaders: false` hides all root-tab headers. The standalone demo uses `PIKD_SHOW_TAB_HEADERS` for the all-tab setting.
