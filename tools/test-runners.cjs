@@ -226,6 +226,7 @@ test('external config/native Maps/environment/QA overrides retain original input
   const original = JSON.stringify({
     PIKD_USER: 'fixture-member-ref',
     PIKD_SHOW_MAP_HEADER: false,
+    PIKD_SHOW_TAB_HEADERS: false,
   });
   fs.writeFileSync(config, original);
   fs.writeFileSync(
@@ -248,6 +249,12 @@ test('external config/native Maps/environment/QA overrides retain original input
     JSON.parse(
       fs.readFileSync(path.join(root, 'config/runtime.generated.json')),
     ).PIKD_SHOW_MAP_HEADER,
+    false,
+  );
+  assert.equal(
+    JSON.parse(
+      fs.readFileSync(path.join(root, 'config/runtime.generated.json')),
+    ).PIKD_SHOW_TAB_HEADERS,
     false,
   );
   assert.equal(
@@ -291,4 +298,19 @@ test('iOS missing log tools reports the install command before native build', as
   assert.equal(result.code, 1);
   assert.match(result.output, /brew install libimobiledevice/);
   assert.ok(!result.output.includes('fixture native build'));
+});
+
+test('all-tab header configuration rejects non-boolean values', t => {
+  const { root, env } = fixture(t);
+  fs.writeFileSync(
+    env.PIKD_DEMO_CONFIG,
+    JSON.stringify({ PIKD_SHOW_TAB_HEADERS: 'false' }),
+  );
+  const result = spawnSync(process.execPath, ['tools/prepare-config.cjs'], {
+    cwd: root,
+    env,
+    encoding: 'utf8',
+  });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /PIKD_SHOW_TAB_HEADERS must be a JSON boolean/);
 });

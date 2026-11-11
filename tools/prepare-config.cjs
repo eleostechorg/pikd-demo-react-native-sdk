@@ -22,11 +22,10 @@ if (process.env.PIKD_DEMO_COLLECT_RADIUS_M) {
     throw new Error('Local QA collection radius must be positive');
   values.PIKD_DEMO_COLLECT_RADIUS_M = radius;
 }
-if (
-  values.PIKD_SHOW_MAP_HEADER !== undefined &&
-  typeof values.PIKD_SHOW_MAP_HEADER !== 'boolean'
-)
-  throw new Error('PIKD_SHOW_MAP_HEADER must be a JSON boolean');
+for (const key of ['PIKD_SHOW_MAP_HEADER', 'PIKD_SHOW_TAB_HEADERS']) {
+  if (values[key] !== undefined && typeof values[key] !== 'boolean')
+    throw new Error(`${key} must be a JSON boolean`);
+}
 if (process.env.PIKD_DIAGNOSTICS)
   values.PIKD_DIAGNOSTICS =
     process.env.PIKD_DIAGNOSTICS === '1' ||
@@ -70,6 +69,7 @@ const allowed = [
   'PIKD_LANGUAGE_REF',
   'PIKD_DEMO_COLLECT_RADIUS_M',
   'PIKD_SHOW_MAP_HEADER',
+  'PIKD_SHOW_TAB_HEADERS',
   'PIKD_PARTNER_LABEL',
   'PIKD_PARTNER_ITEM_BRAND',
   'PIKD_PARTNER_APP_NAME',
